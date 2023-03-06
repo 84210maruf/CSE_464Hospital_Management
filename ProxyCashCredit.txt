@@ -1,0 +1,33 @@
+// Interface for both Cash and CreditCard
+interface Payment {
+    void makePayment(double amount);
+}
+
+// Concrete implementation of Payment interface - Cash
+class Cash implements Payment {
+    public void makePayment(double amount) {
+        // logic for making payment through cash
+    }
+}
+
+// Proxy class for Cash - CreditCard
+class CreditCard implements Payment {
+    private Cash cash;
+
+    public void makePayment(double amount) {
+        if (cash == null) {
+            cash = new Cash();
+        }
+        // additional functionality provided by CreditCard
+        System.out.println("Payment made through Credit Card");
+        cash.makePayment(amount);
+    }
+}
+
+// Client code
+public class Client {
+    public static void main(String[] args) {
+        Payment payment = new CreditCard();
+        payment.makePayment(1000);
+    }
+}

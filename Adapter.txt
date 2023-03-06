@@ -1,0 +1,35 @@
+interface Charger {
+    void charge();
+}
+
+interface Charger {
+    void charge();
+}
+interface PowerOutlet {
+    void providePower();
+}
+class EuropeanPowerOutlet implements PowerOutlet {
+    public void providePower() {
+        System.out.println("Providing power from European outlet...");
+    }
+}
+class EuropeanToMobileChargerAdapter implements Charger {
+    private PowerOutlet powerOutlet;
+    
+    public EuropeanToMobileChargerAdapter(PowerOutlet powerOutlet) {
+        this.powerOutlet = powerOutlet;
+    }
+    
+    public void charge() {
+        powerOutlet.providePower();
+        System.out.println("Converting power to mobile charger...");
+        new MobileCharger().charge();
+    }
+}
+public static void main(String[] args) {
+    PowerOutlet europeanOutlet = new EuropeanPowerOutlet();
+    Charger mobileCharger = new EuropeanToMobileChargerAdapter(europeanOutlet);
+    mobileCharger.charge(); // Charging mobile...
+                            // Converting power to mobile charger...
+                            // Charging mobile...
+}

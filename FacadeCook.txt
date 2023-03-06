@@ -1,0 +1,49 @@
+// Command interface
+interface Order {
+    void execute();
+}
+
+// Concrete command implementation
+class FoodOrder implements Order {
+    private Kitchen kitchen;
+
+    public FoodOrder(Kitchen kitchen) {
+        this.kitchen = kitchen;
+    }
+
+    public void execute() {
+        kitchen.prepareFood();
+    }
+}
+
+// Invoker class
+class Waiter {
+    private Order order;
+
+    public void takeOrder(Order order) {
+        this.order = order;
+    }
+
+    public void placeOrder() {
+        order.execute();
+    }
+}
+
+// Receiver class
+class Kitchen {
+    public void prepareFood() {
+        // logic for preparing the food
+    }
+}
+
+// Client code
+public class Client {
+    public static void main(String[] args) {
+        Kitchen kitchen = new Kitchen();
+        FoodOrder foodOrder = new FoodOrder(kitchen);
+        Waiter waiter = new Waiter();
+
+        waiter.takeOrder(foodOrder);
+        waiter.placeOrder();
+    }
+}
